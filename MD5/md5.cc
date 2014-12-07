@@ -84,6 +84,7 @@ void MD5::update(const char *_message) {
   }
   words[0] = a0; words[1] = b0;
   words[2] = c0; words[3] = d0;
+  delete[] bytes;
 }
 
 const std::string MD5::str() {
