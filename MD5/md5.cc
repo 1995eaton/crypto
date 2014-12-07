@@ -8,7 +8,7 @@
 class MD5 {
     static const uint32_t s[], K[];
     std::string message;
-    uint32_t words[4] = {};
+    uint32_t words[4];
   public:
     const std::string str();
     void update(const char *_message);
@@ -46,7 +46,7 @@ const uint32_t MD5::K[]=
 void MD5::update(const char *_message) {
   message += _message;
   const uint32_t block_count = CEIL(message.length() / 64.0);
-  auto bytes = new uint8_t[block_count << 6];
+  uint8_t bytes[block_count << 6];
   std::fill(bytes, bytes + (block_count << 6), 0);
   std::copy(message.begin(), message.end(), bytes);
   bytes[message.length()] = 128;
@@ -54,7 +54,7 @@ void MD5::update(const char *_message) {
     static_cast<uint64_t>(message.length()) * 8;
   int a0 = 0x67452301, b0 = 0xEFCDAB89,
       c0 = 0x98BADCFE, d0 = 0x10325476;
-  for (uint32_t block = 0, M[16] = {0}; block < block_count; block++) {
+  for (uint32_t block = 0, M[16]; block < block_count; block++) {
     for (uint32_t j = 0, i = block << 6; j < 64; j++, i++) {
       M[j >> 2] = (bytes[i] << 24) | (M[j >> 2] >> 8);
     }
@@ -84,7 +84,6 @@ void MD5::update(const char *_message) {
   }
   words[0] = a0; words[1] = b0;
   words[2] = c0; words[3] = d0;
-  delete[] bytes;
 }
 
 const std::string MD5::str() {
