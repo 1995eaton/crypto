@@ -87,7 +87,7 @@ std::string read_stdin() {
       ( std::ostringstream() << std::cin.rdbuf() ).str();
 }
 
-int main(int argc, char **argv) {
+int main() {
   SHA256 hash(read_stdin());
   std::cout << hash << std::endl;
 }

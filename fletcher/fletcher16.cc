@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 
 #define _F16(N) ((N & 0xff) + (N >> 8))
 
@@ -22,7 +23,11 @@ uint32_t Fletcher16(std::string message) {
   return sum2 << 8 | sum1;
 }
 
+std::string read_stdin() {
+  return static_cast<std::ostringstream&>
+      ( std::ostringstream() << std::cin.rdbuf() ).str();
+}
+
 int main(int argc, char **argv) {
-  std::cout << Fletcher16(argv[1]) << std::endl;
-  return 0;
+  std::cout << Fletcher16(read_stdin()) << std::endl;
 }

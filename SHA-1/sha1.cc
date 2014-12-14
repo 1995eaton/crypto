@@ -86,8 +86,12 @@ std::ostream& operator<<(std::ostream& os, SHA1& hash) {
   return os << hash.to_string();
 }
 
-int main(int argc, char **argv) {
-  SHA1 sha1(argv[1]);
+std::string read_stdin() {
+  return static_cast<std::ostringstream&>
+      ( std::ostringstream() << std::cin.rdbuf() ).str();
+}
+
+int main() {
+  SHA1 sha1(read_stdin());
   cout << sha1 << endl;
-  return 0;
 }
