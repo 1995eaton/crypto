@@ -82,10 +82,12 @@ std::ostream& operator<<(std::ostream& os, SHA256& hash) {
   return os << hash.to_string();
 }
 
+std::string read_stdin() {
+  return static_cast<std::ostringstream&>
+      ( std::ostringstream() << std::cin.rdbuf() ).str();
+}
+
 int main(int argc, char **argv) {
-  if (argc == 2) {
-    SHA256 hash(argv[1]);
-    std::cout << hash << std::endl;
-  }
-  return 0;
+  SHA256 hash(read_stdin());
+  std::cout << hash << std::endl;
 }

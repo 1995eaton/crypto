@@ -96,19 +96,9 @@ const std::string MD5::str() {
   return sum.str();
 }
 
-#include <unistd.h>
 std::string read_stdin() {
-  std::string buffer;
-  static const size_t BSIZE = (1 << 12);
-  while (true) {
-    char block[BSIZE] = {0};
-    size_t br = read(STDIN_FILENO, block, BSIZE);
-    if (br == 0) {
-      break;
-    }
-    buffer.append(block, br);
-  }
-  return buffer;
+  return static_cast<std::ostringstream&>
+      ( std::ostringstream() << std::cin.rdbuf() ).str();
 }
 
 int main() {
